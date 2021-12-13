@@ -89,8 +89,11 @@ export default {
               senha: this.senha,
               nascimento: this.nascimento,
             })
-            .then((resp) => {
-              console.log(resp);
+            .then(() => {
+              this.$emit("show-alert", {
+                type: "success",
+                message: "Usuário cadastrado com sucesso!",
+              });
             });
         } else {
           this.$emit("show-alert", {

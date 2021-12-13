@@ -1,6 +1,12 @@
 <template>
   <div id="login" class="cont-login align-center">
-    <v-alert v-model="alert" :type="typeAlert" transition="slide-y-transition" dismissible>
+    <v-alert
+      v-model="alert"
+      :type="typeAlert"
+      transition="slide-y-transition"
+      width="75%"
+      dismissible
+    >
       {{ messageAlert }}
     </v-alert>
     <v-card width="75%" class="mx-auto" elevation="5">
@@ -23,6 +29,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import FormLogin from "@/components/form-login.vue";
 import FormCadastro from "@/components/form-cadastro.vue";
 export default {
@@ -38,11 +45,15 @@ export default {
     FormLogin,
     FormCadastro,
   },
+  mounted() {
+    this.setRota(this.$route.path)
+  },
   methods: {
+    ...mapMutations(['setRota']),
     showAlert(obj) {
       this.typeAlert = obj.type;
       this.messageAlert = obj.message;
-      this.alert = true
+      this.alert = true;
     },
     changeForm() {
       if (this.componente === "FormLogin") {
