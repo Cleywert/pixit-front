@@ -15,7 +15,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
   },
   {
-    path: '/editar/:teste',
+    path: '/editar/:email',
     name: 'Editar',
     component: () => import(/* webpackChunkName: "website" */ '../views/EditUser.vue')
   }

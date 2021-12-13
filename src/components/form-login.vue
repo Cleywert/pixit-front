@@ -22,32 +22,39 @@
 
 <script>
 import axios from "axios";
+import { mapMutations } from "vuex";
 export default {
   data: () => ({
     email: "",
     senha: "",
   }),
   methods: {
+    ...mapMutations(["setUser"]),
     login(event) {
       event.preventDefault();
-
       axios
         .get(`http://localhost:8000/login/${this.email}/${this.senha}`)
-        .then((resp) => {
-          if (resp.data.email) {
+        .then((response) => {
+          if (response.data.email) {
+            const data = Date.now();
+            this.setUser({
+              ...response.data,
+              timeLogin: data
+            })
             this.$router.push({path: '/'})
           } else {
-            this.$emit("show-alert",{
+            this.$emit("show-alert", {
               type: "error",
-              message: resp.data
-            })
+              message: response.data,
+            });
           }
         })
         .catch(() => {
-          this.$emit("show-alert",{
-              type: "error",
-              message: "Não foi possível completar seu login. Verifique se todos os campos estão preenchidos"
-            })
+          this.$emit("show-alert", {
+            type: "error",
+            message:
+              "Não foi possível completar seu login. Verifique se todos os campos estão preenchidos",
+          });
         });
     },
   },

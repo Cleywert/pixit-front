@@ -6,10 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     rota: "",
+    userLog: {},
     dialog: {
       show: false,
       message: "",
-      action: "",
+      key: ""
+    },
+    dialogConta: {
+      show: false,
+      message: "",
       key: ""
     }
   },
@@ -17,16 +22,32 @@ export default new Vuex.Store({
     setRota(state, payload) {
       state.rota = payload
     },
+    setUser(state, payload) {
+      state.userLog = payload
+      if (payload.email) {
+        window.localStorage.userLog = JSON.stringify(payload);
+      }
+    },
     toggleDialog(state, payload) {
       if (state.dialog.show) {
         state.dialog = {
           show: false,
           message: "",
-          action: "",
           key: ""
         }
       } else {
         state.dialog = payload;
+      }
+    },
+    toggleDialogConta(state, payload) {
+      if (state.dialogConta.show) {
+        state.dialogConta = {
+          show: false,
+          message: "",
+          key: ""
+        }
+      } else {
+        state.dialogConta = payload;
       }
     }
   },

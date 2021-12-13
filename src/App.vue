@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <navbar></navbar>
+    <navbar @excluir-conta="excluir"></navbar>
+    <DialogConta></DialogConta>
     <v-main>
       <router-view />
     </v-main>
@@ -8,10 +9,26 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 import navbar from "@/components/navbar.vue";
+import DialogConta from "@/components/dialog-excluir-conta.vue";
 export default {
   components: {
-    navbar
+    navbar,
+    DialogConta
+  },
+  computed: {
+    ...mapState(['userLog'])
+  },
+  methods: {
+    ...mapMutations(['toggleDialogConta']),
+    excluir() {
+      this.toggleDialogConta({
+        show: true,
+        message: "Deseja mesmo excluir sua conta?",
+        key: this.userLog.email
+      })
+    }
   }
 };
 </script>

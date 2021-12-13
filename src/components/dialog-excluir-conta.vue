@@ -1,8 +1,8 @@
 <template>
-  <v-dialog width="500px" v-model="dialog.show">
+  <v-dialog width="500px" v-model="dialogConta.show">
     <v-card>
       <v-card-title class="text-h5">
-        {{ dialog.message }}
+        {{ dialogConta.message }}
       </v-card-title>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -18,17 +18,25 @@ import axios from "axios";
 import { mapState, mapMutations } from "vuex";
 export default {
   computed: {
-    ...mapState(["dialog"]),
+    ...mapState(["dialogConta"]),
   },
   methods: {
-    ...mapMutations(['toggleDialog']),
+    ...mapMutations(['toggleDialogConta', 'setUser']),
     close() {
-      this.toggleDialog();
+      this.toggleDialogConta();
+    },
+    logoff() {
+      window.localStorage.removeItem('userLog');
+      this.setUser({});
+      this.$router.push({path: "/login"})
     },
     confirmar() {
       axios
-        .delete(`http://localhost:8000/usuario/${this.dialog.key}`)
-        .then(() => {this.$router.go(0)});
+        .delete(`http://localhost:8000/usuario/${this.dialogConta.key}`)
+        .then(() => {
+            this.close();
+            this.logoff();
+        });
     },
   },
 };

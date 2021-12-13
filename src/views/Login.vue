@@ -30,6 +30,7 @@
 
 <script>
 import { mapMutations } from "vuex";
+import Login from "@/mixins/log.js";
 import FormLogin from "@/components/form-login.vue";
 import FormCadastro from "@/components/form-cadastro.vue";
 export default {
@@ -45,8 +46,12 @@ export default {
     FormLogin,
     FormCadastro,
   },
+  mixins: [Login],
   mounted() {
     this.setRota(this.$route.path)
+  },
+  created() {
+    this.verificaLogin();
   },
   methods: {
     ...mapMutations(['setRota']),

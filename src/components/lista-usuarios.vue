@@ -4,10 +4,10 @@
     <v-data-table :headers="headers" :items="usuarios" class="elevation-3">
       <template #[`item.acoes`]="{item}">
         <v-btn-toggle dense group>
-          <v-btn title="Editar" @click="redirEditar">
+          <v-btn title="Editar" @click="redirEditar(item.email)">
             <v-icon color="yellow darken-2">mdi-pencil</v-icon>
           </v-btn>
-          <v-btn title="Excluir" @click="excluir(item.email)">
+          <v-btn title="Excluir" :disabled="item.email === userLog.email" @click="excluir(item.email)">
             <v-icon color="error">mdi-delete</v-icon>
           </v-btn>
         </v-btn-toggle>
@@ -18,7 +18,7 @@
 
 <script>
 import axios from "axios";
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import DialogConfirm from "@/components/confirma-acao.vue";
 export default {
   data: () => ({
@@ -34,12 +34,16 @@ export default {
       {
         text: "Açoes",
         value: "acoes",
+        sortable: false
       },
     ],
     usuarios: [],
   }),
   components: {
     DialogConfirm
+  },
+  computed: {
+    ...mapState(['userLog'])
   },
   mounted() {
     this.getUsuarios();
@@ -51,14 +55,13 @@ export default {
         this.usuarios = response.data;
       });
     },
-    redirEditar() {
-      this.$router.push({ name: "Editar", params: { teste: "olá" } });
+    redirEditar(email) {
+      this.$router.push({ name: "Editar", params: { email } });
     },
     excluir(email){
       this.toggleDialog({
         show: true,
         message: "Deseja mesmo excluir este usuário?",
-        action: "excluir",
         key: email
       })
     }
