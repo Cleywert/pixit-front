@@ -9,7 +9,7 @@ vue
 Uma lista de comandos deve aparecer, caso o contrário, instale o Vue.js seguindo os passos disponíveis [aqui](https://vuejs.org/v2/guide/installation.html)
 
 ## Dependencias
-Para instalar as dependencias deste projeto, abra o terminal do computador e navegue até a pasta raiz do projeto clonado.
+Para instalar as dependencias deste projeto, abra o terminal do computador e navegue até a pasta raiz do projeto clonado (mantenha essa guia do terminal aberta).
 Uma vez nesta pasta execute o comando
 ```
 npm i
