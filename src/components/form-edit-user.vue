@@ -65,7 +65,7 @@ export default {
     this.getUser();
   },
   methods: {
-    ...mapMutations(['setUser']),
+    ...mapMutations(["setUser"]),
     getUser() {
       axios
         .get(`http://localhost:8000/usuario/${this.email}`)
@@ -94,15 +94,23 @@ export default {
             .put(`http://localhost:8000/usuario/${this.email}`, this.usuario)
             .then((response) => {
               this.usuario = response.data;
-              this.setUser({...this.usuario, timeLogin: Date.now()})
-              this.$emit('show-alert',{
-                type: 'success',
-                message: 'Dados atualizados com sucesso'
-              })
+              this.setUser({ ...this.usuario, timeLogin: Date.now() });
+              this.$emit("show-alert", {
+                type: "success",
+                message: "Dados atualizados com sucesso",
+              });
             });
+        } else {
+          this.$emit("show-alert", {
+            type: "error",
+            message: "As senhas não coincidem!",
+          });
         }
-      }else{
-        alert('Preencha todos os campos')
+      } else {
+        this.$emit("show-alert", {
+          type: "error",
+          message: "Preencha todos os campos!",
+        });
       }
     },
   },
