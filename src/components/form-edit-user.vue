@@ -44,7 +44,7 @@
         ></v-text-field>
       </v-col>
       <v-btn type="submit" color="success" block class="mb-2">Salvar</v-btn>
-      <v-btn color="secondary" block small>Cancelar</v-btn>
+      <v-btn color="secondary" block small @click="getUser">Cancelar</v-btn>
     </v-row>
   </v-form>
 </template>
